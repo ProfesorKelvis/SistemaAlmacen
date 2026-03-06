@@ -16,14 +16,14 @@ namespace SistemaAlmacen.Application.UseCases
             this.repositorioAlmacen = repositorioAlmacen;
         }
 
-        public async Task<Result<AlmacenModel>> GuardarAlmacenAsync(AlmacenModel model, CancellationToken ct = default)
+        public async Task<Resultado<AlmacenModel>> GuardarAlmacenAsync(AlmacenModel model, CancellationToken ct = default)
         {
             return model.Id == null || model.Id == Guid.Empty
                 ? await CrearAlmacenAsync(model,  ct)
                 : await ActualizarAlmacenAsync(model.Id.Value, model, ct);
         }
 
-        public async Task<Result<AlmacenModel>> CrearAlmacenAsync(AlmacenModel model, CancellationToken ct = default)
+        public async Task<Resultado<AlmacenModel>> CrearAlmacenAsync(AlmacenModel model, CancellationToken ct = default)
         {
             try
             {
@@ -34,21 +34,21 @@ namespace SistemaAlmacen.Application.UseCases
 
                 var entityCreada = await repositorioAlmacen.AgregarAsync(entity, ct);
 
-                return Result<AlmacenModel>.Success(entityCreada.ToModel());
+                return Resultado<AlmacenModel>.Success(entityCreada.ToModel());
             }
             catch (ExcepcionReglaNegocio ex)
             {
-                return Result<AlmacenModel>.Failure($"Error al crear el almacén: {ex.Message}");
+                return Resultado<AlmacenModel>.Failure($"Error al crear el almacén: {ex.Message}");
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<AlmacenModel>.Failure($"Error al crear el almacén");
+                return Resultado<AlmacenModel>.Failure($"Error al crear el almacén");
             }
         }
 
-        public async Task<Result<AlmacenModel>> ActualizarAlmacenAsync(Guid id, AlmacenModel model, CancellationToken ct = default)
+        public async Task<Resultado<AlmacenModel>> ActualizarAlmacenAsync(Guid id, AlmacenModel model, CancellationToken ct = default)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace SistemaAlmacen.Application.UseCases
 
                 var existe = await repositorioAlmacen.ExisteAsync(id);
 
-                if (!existe) return Result<AlmacenModel>.Failure("Almacén no encontrado.");
+                if (!existe) return Resultado<AlmacenModel>.Failure("Almacén no encontrado.");
 
 
                 //Establecemos el Id a actualizar
@@ -67,104 +67,104 @@ namespace SistemaAlmacen.Application.UseCases
 
                 var entityActualizada = await repositorioAlmacen.ActualizarAsync(entidadActualizar, ct);
 
-                return Result<AlmacenModel>.Success(entityActualizada.ToModel());
+                return Resultado<AlmacenModel>.Success(entityActualizada.ToModel());
 
             }
             catch (ExcepcionReglaNegocio ex)
             {
-                return Result<AlmacenModel>.Failure($"Error al actualizar el almacén: {ex.Message}");
+                return Resultado<AlmacenModel>.Failure($"Error al actualizar el almacén: {ex.Message}");
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<AlmacenModel>.Failure($"Error al actualizar el almacén. {ex.Message}");
+                return Resultado<AlmacenModel>.Failure($"Error al actualizar el almacén. {ex.Message}");
             }
         }
 
-        public async Task<Result<bool>> EliminarAlmacenAsync(Guid id, CancellationToken ct)
+        public async Task<Resultado<bool>> EliminarAlmacenAsync(Guid id, CancellationToken ct)
         {
             try
             {
 
                 await repositorioAlmacen.EliminarAsync(id, ct);
 
-                return Result<bool>.Success(true);
+                return Resultado<bool>.Success(true);
 
             }            
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<bool>.Failure($"Error al eliminar el almacén.");
+                return Resultado<bool>.Failure($"Error al eliminar el almacén.");
             }
         }
 
-        public async Task<Result<IReadOnlyList<AlmacenModel>>> ObtenerAlmacenesAsync(CancellationToken ct = default)
+        public async Task<Resultado<IReadOnlyList<AlmacenModel>>> ObtenerAlmacenesAsync(CancellationToken ct = default)
         {
             try
             {
 
                 var almacenes = await repositorioAlmacen.ObtenerTodosAsync(ct);
 
-                return Result<IReadOnlyList<AlmacenModel>>.Success(almacenes.ToModels());
+                return Resultado<IReadOnlyList<AlmacenModel>>.Success(almacenes.ToModels());
 
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<IReadOnlyList<AlmacenModel>>.Failure($"Error al obtener los almacenes");
+                return Resultado<IReadOnlyList<AlmacenModel>>.Failure($"Error al obtener los almacenes");
             }
         }
 
-        public async Task<Result<AlmacenModel>> ObtenerAlmacenPorIdAsync(Guid id, CancellationToken ct = default)
+        public async Task<Resultado<AlmacenModel>> ObtenerAlmacenPorIdAsync(Guid id, CancellationToken ct = default)
         {
             try
             {
                 var almacenEncontrado = await repositorioAlmacen.ObtenerPorIdAsync(id);
 
-                if (almacenEncontrado == null) return Result<AlmacenModel>.Failure("Almacén no encontrado.");
+                if (almacenEncontrado == null) return Resultado<AlmacenModel>.Failure("Almacén no encontrado.");
 
-                return Result<AlmacenModel>.Success(almacenEncontrado.ToModel());
+                return Resultado<AlmacenModel>.Success(almacenEncontrado.ToModel());
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<AlmacenModel>.Failure($"Error al obtener el almacen.");
+                return Resultado<AlmacenModel>.Failure($"Error al obtener el almacen.");
             }
         }
 
-        public async Task<Result<bool>> ExisteAlmacenAsync(Guid id, CancellationToken ct = default)
+        public async Task<Resultado<bool>> ExisteAlmacenAsync(Guid id, CancellationToken ct = default)
         {
             try
             {
                 var existe = await repositorioAlmacen.ExisteAsync(id);
 
-                return existe ? Result<bool>.Success(true) : Result<bool>.Failure("Almacén no encontrado.");
+                return existe ? Resultado<bool>.Success(true) : Resultado<bool>.Failure("Almacén no encontrado.");
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<bool>.Failure("Almacén no encontrado.");
+                return Resultado<bool>.Failure("Almacén no encontrado.");
             }
         }
 
-        public async Task<Result<int>> ContarAlmacenesAsync(CancellationToken ct = default)
+        public async Task<Resultado<int>> ContarAlmacenesAsync(CancellationToken ct = default)
         {
             try
             {
                 var cantidad= await repositorioAlmacen.ContarAsync();
 
-                return Result<int>.Success(cantidad);
+                return Resultado<int>.Success(cantidad);
             }
             catch (Exception ex)
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Result<int>.Failure("Falla al contar los almacenes.");
+                return Resultado<int>.Failure("Falla al contar los almacenes.");
             }
         }
     }

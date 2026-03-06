@@ -6,7 +6,7 @@ namespace SistemaAlmacen.Application
 {
     public static class RegistroServiciosAplicacion
     {
-        public static IServiceCollection AgregarServiciosAplicacion(this IServiceCollection services)
+        public static IServiceCollection RegistrarServiciosAplicacion(this IServiceCollection services)
         {
             services.AddScoped<IGestionAlmacenUseCase, GestionAlmacenUseCase>();
 

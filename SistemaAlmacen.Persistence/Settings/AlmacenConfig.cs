@@ -5,7 +5,7 @@ using SistemaAlmacen.Domain.Entities;
 
 namespace SistemaAlmacen.Persistence.Settings
 {
-    public class AlmacenConfiguration : IEntityTypeConfiguration<Almacen>
+    public class AlmacenConfig : IEntityTypeConfiguration<Almacen>
     {
         public void Configure(EntityTypeBuilder<Almacen> builder)
         {

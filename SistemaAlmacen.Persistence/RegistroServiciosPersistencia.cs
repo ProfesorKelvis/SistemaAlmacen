@@ -7,7 +7,7 @@ namespace SistemaAlmacen.Persistence
 {
     public static class RegistroServiciosPersistencia
     {
-        public static IServiceCollection AgregarServiciosPersistencia(this IServiceCollection services)
+        public static IServiceCollection RegistrarServiciosPersistencia(this IServiceCollection services)
         {
             services.AddDbContext<SistemaAlmacenDbContext>(options =>
                 options.UseSqlServer("name=SistemaAlmacenConnectionString"));

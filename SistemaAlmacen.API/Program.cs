@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AgregarServiciosPersistencia();
-builder.Services.AgregarServiciosAplicacion();
+builder.Services.RegistrarServiciosPersistencia();
+builder.Services.RegistrarServiciosAplicacion();
 
 // Swagger/OpenAPI configuration
 builder.Services.AddEndpointsApiExplorer();

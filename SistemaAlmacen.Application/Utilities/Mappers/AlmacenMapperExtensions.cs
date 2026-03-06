@@ -34,5 +34,11 @@ namespace SistemaAlmacen.Application.Utilities.Mappers
 
         public static IReadOnlyList<Almacen> ToEntities(this IReadOnlyList<AlmacenModel> models)
             => [.. models.Select(d => d.ToEntity())];
+
+        public static IReadOnlyList<AlmacenModel> ToModelsClasico(this IReadOnlyList<Almacen> entities)
+                => entities.Select(e => e.ToModel()).ToList();
+
+        public static IReadOnlyList<Almacen> ToEntitiesClasico(this IReadOnlyList<AlmacenModel> models)
+            => models.Select(d => d.ToEntity()).ToList();
     }
 }
