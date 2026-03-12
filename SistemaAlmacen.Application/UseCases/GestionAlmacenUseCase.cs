@@ -44,6 +44,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al crear el almacén: {ex.Message}");
                 return Resultado<AlmacenModel>.Failure($"Error al crear el almacén");
             }
         }
@@ -78,7 +79,8 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
-                return Resultado<AlmacenModel>.Failure($"Error al actualizar el almacén. {ex.Message}");
+                Console.WriteLine($"Error al actualizar el almacén: {ex.Message}");
+                return Resultado<AlmacenModel>.Failure($"Error al actualizar el almacén.");
             }
         }
 
@@ -96,6 +98,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al eliminar el almacén: {ex.Message}");
                 return Resultado<bool>.Failure($"Error al eliminar el almacén.");
             }
         }
@@ -114,6 +117,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al obtener los almacenes: {ex.Message}");
                 return Resultado<IReadOnlyList<AlmacenModel>>.Failure($"Error al obtener los almacenes");
             }
         }
@@ -132,6 +136,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al obtener el almacén: {ex.Message}");
                 return Resultado<AlmacenModel>.Failure($"Error al obtener el almacen.");
             }
         }
@@ -148,6 +153,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al buscar el almacén: {ex.Message}");
                 return Resultado<bool>.Failure("Almacén no encontrado.");
             }
         }
@@ -164,6 +170,7 @@ namespace SistemaAlmacen.Application.UseCases
             {
                 //Registrar en el log de errores
                 //ex.Message
+                Console.WriteLine($"Error al contar los almacenes: {ex.Message}");
                 return Resultado<int>.Failure("Falla al contar los almacenes.");
             }
         }

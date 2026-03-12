@@ -36,5 +36,41 @@ namespace SistemaAlmacen.API.Controllers
                 return BadRequest(resultado);
             }
         }
+
+        [HttpGet("obtener")]
+        public async Task<IActionResult> Obtener()
+        {
+            var resultado = await gestionAlmacenUseCase.ObtenerAlmacenesAsync();
+
+            if (resultado.IsSuccess)
+            {
+                return Ok(resultado);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("obtener:{id}")]
+        public async Task<IActionResult> Obtener(string id)
+        {
+            var GuidId = Guid.TryParse(id, out var guid) ? guid : Guid.Empty;
+            if (GuidId == Guid.Empty)
+            {
+                return BadRequest("ID inválido.");
+            }
+
+            var resultado = await gestionAlmacenUseCase.ObtenerAlmacenPorIdAsync(GuidId);
+
+            if (resultado.IsSuccess)
+            {
+                return Ok(resultado);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
