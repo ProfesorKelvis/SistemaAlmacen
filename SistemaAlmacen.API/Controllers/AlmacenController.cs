@@ -72,5 +72,26 @@ namespace SistemaAlmacen.API.Controllers
                 return NotFound();
             }
         }
+
+        [HttpDelete("eliminar:{id}")]
+        public async Task<IActionResult> Eliminar(string id)
+        {
+            var GuidId = Guid.TryParse(id, out var guid) ? guid : Guid.Empty;
+            if (GuidId == Guid.Empty)
+            {
+                return BadRequest("ID inválido.");
+            }
+
+            var resultado = await gestionAlmacenUseCase.EliminarAlmacenAsync(GuidId);
+
+            if (resultado.IsSuccess)
+            {
+                return Ok(resultado);
+            }
+            else
+            {
+                return BadRequest($"No se pudo eliminar el id:{id}");
+            }
+        }
     }
 }
